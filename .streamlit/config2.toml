@@ -1,0 +1,108 @@
+[theme]
+# Minimal, cool-toned light theme using the supplied palette.
+base = "light"
+
+# Main UI: teal accent, quiet neutral surfaces, high-contrast text.
+primaryColor = "#208EA3"
+backgroundColor = "#F8FAFC"
+secondaryBackgroundColor = "#EEF3F5"
+textColor = "#202B33"
+
+# Streamlit semantic colors, chosen from the supplied palette.
+redColor = "#E8384F"
+orangeColor = "#FD612C"
+yellowColor = "#EECC16"
+blueColor = "#4178BC"
+greenColor = "#62BB35"
+violetColor = "#7A71F6"
+grayColor = "#8D9F9B"
+
+# Pale semantic backgrounds for readable alerts and colored elements.
+redBackgroundColor = "#FCE8EB"
+orangeBackgroundColor = "#FFF0E8"
+yellowBackgroundColor = "#FFF8D8"
+blueBackgroundColor = "#EAF2FB"
+greenBackgroundColor = "#EAF6E5"
+violetBackgroundColor = "#F0EDFF"
+grayBackgroundColor = "#EDF1F0"
+
+# Text colors with better contrast on light surfaces.
+redTextColor = "#B42336"
+orangeTextColor = "#B9471E"
+yellowTextColor = "#6B5700"
+blueTextColor = "#285A91"
+greenTextColor = "#347A1C"
+violetTextColor = "#5548C8"
+grayTextColor = "#465652"
+
+linkColor = "#176F82"
+linkUnderline = true
+codeTextColor = "#176F82"
+codeBackgroundColor = "#EEF3F5"
+
+font = "sans-serif"
+headingFont = "sans-serif"
+codeFont = "monospace"
+baseFontSize = 16
+baseFontWeight = 400
+baseRadius = "0.75rem"
+buttonRadius = "0.65rem"
+borderColor = "#D9E3E6"
+dataframeBorderColor = "#D9E3E6"
+dataframeHeaderBackgroundColor = "#EAF1F3"
+dataframeHeaderTextColor = "#202B33"
+showWidgetBorder = true
+showSidebarBorder = true
+paddingTop = "1.5rem"
+paddingBottom = "2rem"
+
+# Distinct colors from the provided palette; don't use color alone to convey meaning.
+chartCategoricalColors = [
+  "#4178BC", # Sblue
+  "#208EA3", # Saqua
+  "#E8384F", # red
+  "#FD817D", # Sorange / coral
+  "#7A71F6", # Sindigo
+  "#62BB35", # Sgreen
+  "#FDAE33", # Syellow-orange
+  "#AA71FF", # Spurple
+  "#37A862", # Sblue-green
+  "#8D9F9B"  # Scool-gray
+]
+
+# Ten-step sequential palette based on the teal/blue family.
+chartSequentialColors = [
+  "#E5F4F6",
+  "#CDE9ED",
+  "#A9D9E0",
+  "#80C5D0",
+  "#58B0BF",
+  "#379BAD",
+  "#208EA3",
+  "#1B7184",
+  "#155867",
+  "#103F4A"
+]
+
+# Diverging palette: warm red -> neutral -> cool blue.
+chartDivergingColors = [
+  "#9F2636",
+  "#C93648",
+  "#E8384F",
+  "#F47B86",
+  "#F8C9CE",
+  "#DCE7EA",
+  "#A9C9D6",
+  "#6E9FBD",
+  "#4178BC",
+  "#285A91"
+]
+
+[theme.sidebar]
+# Keep the sidebar quieter than the main content.
+primaryColor = "#208EA3"
+backgroundColor = "#EEF3F5"
+secondaryBackgroundColor = "#E4ECEF"
+textColor = "#202B33"
+borderColor = "#D5E0E3"
+showWidgetBorder = true

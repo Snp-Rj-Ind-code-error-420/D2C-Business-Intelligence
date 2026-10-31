@@ -1,0 +1,91 @@
+# Indigo Lavender — DARK THEME
+# Copy this file to: your_project/.streamlit/config.toml
+
+[theme]
+base = "dark"
+primaryColor = "#A69CFF"
+backgroundColor = "#151421"
+secondaryBackgroundColor = "#211F32"
+textColor = "#F0EEFA"
+font = "sans serif"
+
+# UI shape and border settings
+baseRadius = "0.6rem"
+buttonRadius = "0.6rem"
+showWidgetBorder = true
+borderColor = "#3B3754"
+dataframeHeaderBackgroundColor = "#2B2840"
+
+# Semantic colors
+redColor = "#FF7184"
+orangeColor = "#FF986B"
+yellowColor = "#FFDD70"
+blueColor = "#82B5FF"
+greenColor = "#8DDC72"
+violetColor = "#B4A9FF"
+grayColor = "#A8B2B0"
+
+# Text colors used on semantic surfaces
+redTextColor = "#FFB7C1"
+orangeTextColor = "#FFC2A5"
+yellowTextColor = "#FFE9A8"
+blueTextColor = "#C2DCFF"
+greenTextColor = "#C4F0B4"
+violetTextColor = "#D8D1FF"
+grayTextColor = "#D2D9D7"
+
+# Soft semantic backgrounds, tuned for dark UI
+redBackgroundColor = "#3A202B"
+orangeBackgroundColor = "#3B281F"
+yellowBackgroundColor = "#39321C"
+blueBackgroundColor = "#202D45"
+greenBackgroundColor = "#233522"
+violetBackgroundColor = "#2B2745"
+grayBackgroundColor = "#292E32"
+
+# Chart palette
+chartCategoricalColors = [
+    "#B4A9FF",
+    "#82B5FF",
+    "#5FD0D9",
+    "#FF7184",
+    "#FF986B",
+    "#8DDC72",
+    "#FFDD70",
+    "#D0A0FF",
+    "#5FD6A0",
+    "#A8B2B0"
+]
+
+# Sequential palette: dark to bright indigo
+chartSequentialColors = [
+    "#211F32",
+    "#2B2848",
+    "#39345F",
+    "#4A427C",
+    "#5C529A",
+    "#7063B8",
+    "#8678D4",
+    "#A69CFF",
+    "#C6BFFF",
+    "#E4E0FF"
+]
+
+# Diverging palette: coral to indigo
+chartDivergingColors = [
+    "#FF8B95",
+    "#FF7184",
+    "#E75D7D",
+    "#A94B7E",
+    "#75618F",
+    "#6C70B8",
+    "#7D8DE0",
+    "#9BAEFF",
+    "#C6BFFF"
+]
+
+[theme.sidebar]
+backgroundColor = "#11101C"
+secondaryBackgroundColor = "#211F32"
+primaryColor = "#B4A9FF"
+textColor = "#F0EEFA"
