@@ -318,7 +318,7 @@ reason_records_all = return_reason_records(df)
 # -------------------------------------------------------------------
 # App shell and persistent global filter bar
 # -------------------------------------------------------------------
-st.title("D2C Business Intelligence")
+st.title(" Renner D2C Business Intelligence")
 st.caption("Executive overview · Financial performance · Operational diagnosis")
 
 with st.sidebar:
@@ -481,8 +481,19 @@ if section == "Financial Review" and page == "Overview":
         st.subheader("Revenue by Product Category")
         if {"category", "net_revenue"}.issubset(filtered.columns):
             cat = filtered.groupby("category", as_index=False)["net_revenue"].sum().sort_values("net_revenue")
-            chart(px.bar(cat, x="net_revenue", y="category", orientation="h",
-                         labels={"net_revenue": "Net Revenue", "category": "Category"}))
+            chart(px.pie(
+                    cat,
+                    values="net_revenue",
+                    names="category",
+                    labels={
+                        "net_revenue": "Net Revenue",
+                        "category": "Category"
+                    }
+                ).update_traces(
+                    textinfo="label+percent",
+                    textposition="inside",
+                    hovertemplate="<b>%{label}</b><br>Net Revenue: %{value:,.2f}<br>Share: %{percent}<extra></extra>"
+                ))
         else:
             st.info("Requires `category` and `net_revenue`.")
 
@@ -502,8 +513,19 @@ if section == "Financial Review" and page == "Overview":
         st.subheader("Revenue by Sales Channel")
         if {"channel", "net_revenue"}.issubset(filtered.columns):
             channel = filtered.groupby("channel", as_index=False)["net_revenue"].sum().sort_values("net_revenue")
-            chart(px.bar(channel, x="net_revenue", y="channel", orientation="h",
-                         labels={"net_revenue": "Net Revenue", "channel": "Channel"}))
+            chart(px.pie(
+                channel,
+                values="net_revenue",
+                names="channel",
+                labels={
+                    "net_revenue": "Net Revenue",
+                    "channel": "Channel"
+                }
+            ).update_traces(
+                textinfo="label+percent",
+                textposition="inside",
+                hovertemplate="<b>%{label}</b><br>Net Revenue: %{value:,.2f}<br>Share: %{percent}<extra></extra>"
+            ))
         else:
             st.info("Requires channel and net revenue.")
 
@@ -546,8 +568,19 @@ elif section == "Financial Review" and page == "Products & Categories":
                    money_columns=["revenue", "gross_profit"], pct_columns=["gross_margin_pct"])
         left, right = st.columns(2)
         with left:
-            chart(px.bar(summary.sort_values("revenue"), x="revenue", y="category", orientation="h",
-                         labels={"revenue": "Net Revenue", "category": "Category"}))
+            chart(px.pie(
+                    summary.sort_values("revenue"),
+                    values="revenue",
+                    names="category",
+                    labels={
+                        "revenue": "Net Revenue",
+                        "category": "Category"
+                    }
+                ).update_traces(
+                    textinfo="label+percent",
+                    textposition="inside",
+                    hovertemplate="<b>%{label}</b><br>Net Revenue: %{value:,.2f}<br>Share: %{percent}<extra></extra>"
+                ))
         with right:
             chart(px.bar(summary.sort_values("gross_margin_pct"), x="gross_margin_pct", y="category",
                          orientation="h", labels={"gross_margin_pct": "Gross Margin (%)"}))
@@ -751,13 +784,25 @@ elif section == "Operational Diagnostics" and page == "Overview":
         if filtered_reason_records is not None and not filtered_reason_records.empty:
             reason = filtered_reason_records.groupby("return_reason", as_index=False)["order_id"].nunique()
             reason = reason.rename(columns={"order_id": "returned_orders"}).sort_values("returned_orders")
-            chart(px.bar(reason, x="returned_orders", y="return_reason", orientation="h",
-                         labels={"returned_orders": "Returned Orders", "return_reason": "Reason"}))
+            chart(px.pie(
+                    reason,
+                    values="returned_orders",
+                    names="return_reason",
+                    labels={
+                        "returned_orders": "Returned Orders",
+                        "return_reason": "Reason"
+                    },
+                    hole=.3
+                ).update_traces(
+                    textinfo="label+percent",
+                    textposition="inside",
+                    hovertemplate="<b>%{label}</b><br>Returned Orders: %{value:,.0f}<br>Share: %{percent}<extra></extra>"
+                ))
         else:
             st.info("Return reason data unavailable.")
 
     left, right = st.columns(2)
-    with left:
+    with right:
         st.subheader("Return Rate: Delivery Within 7 Days vs. Over 7 Days")
         if filtered_returns is not None and {"delivery_days", "order_id"}.issubset(odf.columns):
             odf_return = odf.copy()
@@ -774,7 +819,7 @@ elif section == "Operational Diagnostics" and page == "Overview":
                          labels={"delivery_group": "Delivery Group", "return_rate_pct": "Return Rate (%)"}))
         else:
             st.info("Requires delivery days and return data.")
-    with right:
+    with left:
         st.subheader("Average Delivery Days by City")
         if {"city", "delivery_days"}.issubset(odf.columns):
             city_data = odf.groupby("city", as_index=False).agg(
@@ -844,9 +889,21 @@ elif section == "Operational Diagnostics" and page == "Returns":
                 reason = filtered_reason_records.groupby("return_reason", as_index=False)["order_id"].nunique()
                 reason = reason.rename(columns={"order_id": "returned_orders"}).sort_values("returned_orders")
                 reason["share_of_reason_records_pct"] = reason["returned_orders"] / reason["returned_orders"].sum() * 100
-                chart(px.bar(reason, x="returned_orders", y="return_reason", orientation="h",
-                             labels={"returned_orders": "Returned Orders", "return_reason": "Return Reason"}))
-                show_table(reason.sort_values("returned_orders", ascending=False),
+                chart(px.pie(
+                            reason,
+                            values="returned_orders",
+                            names="return_reason",
+                            hole=.3,
+                            labels={
+                                "returned_orders": "Returned Orders",
+                                "return_reason": "Return Reason"
+                            }
+                        ).update_traces(
+                            textinfo="label+percent",
+                            textposition="inside",
+                            hovertemplate="<b>%{label}</b><br>Returned Orders: %{value:,.0f}<br>Share: %{percent}<extra></extra>"
+                        ))
+        show_table(reason.sort_values("returned_orders", ascending=False),
                            pct_columns=["share_of_reason_records_pct"])
 
         st.subheader("Return Rate by Subcategory")
@@ -918,15 +975,27 @@ elif section == "Operational Diagnostics" and page == "Delivery & Payments":
             ).sort_values("avg_delivery_days")
             chart(px.bar(city_data, x="avg_delivery_days", y="city", orientation="h",
                          labels={"avg_delivery_days": "Average Delivery Days", "city": "City"}))
-            show_table(city_data.sort_values("avg_delivery_days", ascending=False))
         else:
             st.info("Requires city and delivery_days.")
+    show_table(city_data.sort_values("avg_delivery_days", ascending=False))
     with right:
         st.subheader("Orders by Payment Method")
         if {"payment_method", "order_id"}.issubset(odf.columns):
             pay = odf.groupby("payment_method", as_index=False)["order_id"].nunique().rename(columns={"order_id": "orders"})
-            chart(px.bar(pay.sort_values("orders"), x="orders", y="payment_method", orientation="h",
-                         labels={"orders": "Orders", "payment_method": "Payment Method"}))
+            chart(px.pie(
+                        pay.sort_values("orders"),
+                        values="orders",
+                        names="payment_method",
+                        hole=.3,
+                        labels={
+                            "orders": "Orders",
+                            "payment_method": "Payment Method"
+                        }
+                    ).update_traces(
+                        textinfo="label+percent",
+                        textposition="inside",
+                        hovertemplate="<b>%{label}</b><br>Orders: %{value:,.0f}<br>Share: %{percent}<extra></extra>"
+                    ))
         else:
             st.info("Requires payment_method and order_id.")
 
@@ -1016,7 +1085,15 @@ elif section == "Operational Diagnostics" and page == "Customer Retention":
             chart(px.imshow(
                 retention,
                 aspect="auto",
-                color_continuous_scale="Blues",
+                color_continuous_scale = [
+    "#C9C4DD",  # Light lavender-gray
+    "#B9B2D8",  # Soft lavender
+    "#B9AFE0",  # Unchanged
+    "#9A8DDA",  # Unchanged
+    "#7D70D0",  # Unchanged
+    "#6257D9",  # Unchanged
+    "#5146BD",  # Unchanged
+],
                 labels={"x": "Months Since First Purchase", "y": "Cohort Month", "color": "Retention (%)"},
                 text_auto=".1f",
             ), height=max(350, min(650, 35 * len(retention) + 150)))
